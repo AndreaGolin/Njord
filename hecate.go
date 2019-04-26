@@ -1,7 +1,7 @@
 package njord
 
 import(
-	"log"
+	"fmt"
 )
 
 type hecate struct{
@@ -13,13 +13,13 @@ type hecate struct{
 /**
  * @brief      implement Command interface
  */
-func (s hecate) njordExecute(done chan bool,stdOut chan string) {
-	log.Printf("þ Hecate executing!\r\n")
-	startHecate(done)
+func (s hecate) njordExecute(done chan bool,stdOut chan string, args []string) {
+	stdOut<-"Executing Hecate"
+	startHecate(done, stdOut, args)
 	
 }
 func (s hecate) njordStop(done chan bool,stdOut chan string){
-	log.Printf("þ Hecate stopping.\n\r")
+	stdOut<-"Stopping Hecate"
 }
 func (s hecate) getName() string{
 	return s.name
@@ -28,6 +28,8 @@ func (s hecate) getDesc() string{
 	return s.description
 }
 
-func startHecate(done chan bool){
-	log.Printf("þ Hecate bootstrapping....\r\n")
+func startHecate(done chan bool, stdOut chan string, args []string){
+	for k,a := range args{
+		fmt.Printf("%d -> %s\n", k,a)
+	}
 }

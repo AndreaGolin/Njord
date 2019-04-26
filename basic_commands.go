@@ -26,7 +26,7 @@ type list struct{
  * HELP Command
  * @brief      implement Command interface
  */
-func (s help) njordExecute(done chan bool, stdOut chan string) {
+func (s help) njordExecute(done chan bool, stdOut chan string, args []string) {
 	log.Printf("þ Help executing!\r\n")
 	CallClear()
 	PrintHelp(s, done, stdOut)
@@ -57,7 +57,7 @@ func PrintHelp(s help, done chan bool, stdOut chan string) {
  *
  * @brief      implement Command interface
  */
-func (s exit) njordExecute(done chan bool,stdOut chan string) {
+func (s exit) njordExecute(done chan bool,stdOut chan string, args []string) {
 	log.Printf("þ Exit executing!\r\n")
 	done <- true
 }
@@ -75,7 +75,7 @@ func (s exit) getDesc() string{
 /**
  * LIST commands
  */
-func (s list) njordExecute(done chan bool, stdOut chan string) {
+func (s list) njordExecute(done chan bool, stdOut chan string, args []string) {
 	log.Printf("þ List executing!\r\n")
 
 	/**

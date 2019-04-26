@@ -20,13 +20,6 @@ func initializeCommandMap(stdOut chan string) {
 	 */
 	commands = make(map[string]Command)
 
-	/**
-	 * Define the commands and assign the hash
-	 * The sonar struct implements Command interface, so commands hashmap CAN actually store it
-	 */
-	sonar := sonar{name:"sonar", description:"Listen passively", key:""}
-	commands[sonar.name] = &sonar
-
 	help := help{name:"help", description:"Print help page", key:""}
 	commands[help.name] = &help;
 
@@ -53,7 +46,7 @@ func initializeCommandMap(stdOut chan string) {
  * @return
  */
 type Command interface{
-	njordExecute(done chan bool, stdOut chan string)
+	njordExecute(done chan bool, stdOut chan string, args []string)
 	njordStop(done chan bool, stdOut chan string)
 	getName() string
 	getDesc() string

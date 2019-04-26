@@ -54,7 +54,6 @@ func captureWithPcap(){
     	fmt.Println(packet)
     }
 
-    
 	log.Println("with syscall end")
 
 }

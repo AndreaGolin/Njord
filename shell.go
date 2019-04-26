@@ -9,13 +9,12 @@ import (
 	"os/exec"
 	"runtime"
 	"flag"
-	// "github.com/nsf/termbox-go"
 )
 
 var clear map[string]func()
 var commands map[string]Command
 
-func Init(){
+func Init(args []string){
 	
 	done := make(chan bool)
 	stdOut := make(chan string)
@@ -29,7 +28,7 @@ func Init(){
 	flag.Parse()
 
 	if *commandFlgPtr != ""{
-		execCommandWrapper(*commandFlgPtr, done, stdOut)
+		execCommandWrapper(*commandFlgPtr, done, stdOut, nil)
 	}
 
 
@@ -75,7 +74,7 @@ func listenForCommands(done chan bool, stdOut chan string) {
 		text = strings.Replace(text, "\n", "", -1)
 		slices := strings.Fields(text)
 		if len(slices) > 0{
-			execCommandWrapper(slices[0], done, stdOut)
+			execCommandWrapper(slices[0], done, stdOut, slices[1:])
 		}
 	}
 }
@@ -88,9 +87,10 @@ func listenForCommands(done chan bool, stdOut chan string) {
  *
  * @return     
  */
-func execCommandWrapper(commandName string, done chan bool, stdOut chan string){
+func execCommandWrapper(commandName string, done chan bool, stdOut chan string, args []string){
+
 	if command, ok := commands[commandName]; ok{
-		command.njordExecute(done, stdOut)
+		command.njordExecute(done, stdOut, args)
 	}else{
 		stdOut<-fmt.Sprintf("Command %s not found.\r\n", commandName)
 	}

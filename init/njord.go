@@ -8,10 +8,10 @@ package main
 
 import (
 	"github.com/AndreaGolin/njord"
-	"log"
+	"os"
 )
 
 func main() {
-	log.Println("Njord bootstrapped.")
-	njord.Init()
+	args := os.Args[1:]
+	njord.Init(args)
 }
